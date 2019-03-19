@@ -20,6 +20,7 @@ path {
     fill: #fff;
     pointer-events: all;
 }
+// The text box shown when a line is hovered in the parallel coordinates
 .tooltip {
   position: absolute;
   text-align: center;

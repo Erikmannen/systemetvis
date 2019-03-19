@@ -5,6 +5,7 @@
 <!-- <script src="https://d3js.org/d3.v5.min.js"></script>
  -->
 <body>
+    <!-- Reads script files and css file -->
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <link href="style.css" media="screen" rel="stylesheet" type="text/css" />
     <script src="js/changeImage.js"></script>
@@ -14,14 +15,18 @@
     <script src="js/updateparaCords.js"></script>
     <script src="js/changeLayout.js"></script>
 
-    <script>var layout = 0;</script>
+    <!-- Global variables for use in the scripts -->
+    <script>var layout = 0;</script><!-- Says if the map and table should display -->
+    <!-- Tells the scripts what year, type and county that is selected -->
     <script>var chosenData = 2;</script>
     <script>var chosenType = 1;</script>
+    <script>var valtLan = "Totalt riket";</script>
+    <!-- The three data sets -->
     <script>var data_vals = []</script>
     <script>var befolkningMedel = [] </script>
     <script>var vanor = []</script>
-    <script>var valtLan = "Totalt riket";</script>
     
+    <!-- Div containing everything -->
     <div class="allt">
         <div class="header">
             <h1>SpritVis</h1>
@@ -29,36 +34,32 @@
 
         <div class="info-body">
             <div class="allt-para">
+                <!-- Div containing buttons, drop-downs and color coding-->
                 <div class="tables">
+                    <!-- Buttons where the user selects to display per person or total, triggers functions from changeLayout.js when pressed -->
                     <button class="buttonClass" id="totaltButton" onclick="changeLayoutTotalt()">Totalt</button>
                     <button class="buttonClass" id="personButton" onclick="changeLayoutPerson()">Per person</button>
+                    <!-- Div containing two drop-downs where one is the year and the other one is the type, triggers functions to update the entire application when changed-->
                     <div class="drop-downs">
                         <div class="dropdown">
                             <select class="dropbtn" name="yearOption" id="yearDropDown" onchange="changeImage(); changePara();changeMap();updateBefolkning();">
                                 <option selected="selected">År</option>
-                                <option value="2017">2017</option>
-                                <option value="2016">2016</option>
-                                <option value="2015">2015</option>
-                                <option value="2014">2014</option>
-                                <option value="2013">2013</option>
-                                <option value="2012">2012</option>
-                                <option value="2011">2011</option>
-                                <option value="2010">2010</option>
-                                <option value="2009">2009</option>
-                                <option value="2008">2008</option>
-                                <option value="2007">2007</option>
-                                <option value="2006">2006</option>
+                                <option>2017</option>
+                                <option>2016</option>
+                                <option>2015</option>
+                                <option>2014</option>
+                                <option>2013</option>
+                                <option>2012</option>
+                                <option>2011</option>
+                                <option>2010</option>
+                                <option>2009</option>
+                                <option>2008</option>
+                                <option>2007</option>
+                                <option>2006</option>
                             </select>
                         </div>
                         <div class="dropdown">
                             <select class="dropbtn" name="typeOption" onChange="changeImage(); createChart() ;changeMap()" id="typeDropDown">
-                                <!--RGB till färgkodningen:
-                                (255,255,204)
-                                (194,230,153)
-                                (120,198,121)
-                                (49,163,84)
-                                (0,104,55)
-                                -->
                                 <option selected="selected">Alkoholtyp</option>
                                 <option>Sprit</option>
                                 <option>Vin</option>
@@ -70,6 +71,7 @@
                         </div>
                     </div>
 
+                    <!-- Div containing the table -->
                     <div class="quarter-info">
                         <table class="tabell" id="tabell">
                             <tr>
@@ -99,11 +101,19 @@
                         </table>
                     </div>
 
+                    <!-- Div describing the color coding -->
                     <div class="color-coding">
+                        <!--RGB for color coding:
+                        (255,255,204)
+                        (194,230,153)
+                        (120,198,121)
+                        (49,163,84)
+                        (0,104,55)
+                        -->
                         <h2 id="colorCodingHeader">Årskonsumtion</h2>
                         <div class="codingDiv" id="codingDiv1">
-                            <div class="circleDiv" id="circleDiv1"></div>
-                            <div class="codingTextDiv">
+                            <div class="circleDiv" id="circleDiv1"></div> <!-- Circles that has the same colors as the map -->
+                            <div class="codingTextDiv"> <!-- Text that describes the correlation between the consumption and the color of a county -->
                                 <p class="codingText" id="codingText1"></p>
                             </div>
                         </div>
@@ -133,18 +143,23 @@
                         </div>
                     </div>
                 </div>
+                <!-- Div containing the map, set up in SetupMap.js-->
                 <div class="map-body" id="mapid">
                 </div>
+                <!-- Div containing the line chart, set up in createChart.js-->
                 <div id="chartContainer" style="height: 20vw; width: 30vw;"></div>
                 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+                <!-- Div containing the visualization for the alcohol habits -->
                 <div id="alkoholVanor">
                     <h2 id="alcoholHeader">Alkoholvanor</h2>
                     <div id="gradering">
+                        <!-- Three divs that are the bars describing the dividing of the alcohol habits -->
                         <div id="risk"><p class="vanorText" id="riskText"></p></div>
                         <div id="ejRisk"><p class="vanorText" id="ejRiskText"></p></div>
                         <div id="ejDruckit"><p class="vanorText" id="ejDruckitText"></p></div>
                     </div>
 
+                    <!-- Legend describing the bars -->
                     <div id="alkoholKodning">
                         <div id="riskSmall" class="smallBox"></div>
                         <p class="legendText">Riskkonsumenter</p>
@@ -155,7 +170,9 @@
                     </div>
                 </div>
             </div>
+   <!-- Div with parallel coordinates, set up in paraCords.js --> 
    <div id="paradiv" class="para"></div>
+        <!-- Legend for the parallel coordinates -->
         <div id="paralegends">
             <div id = "wraper">
                         <div id="Kvartal1" class="smallBox"></div>
@@ -170,12 +187,12 @@
     </div>
 
     </div>
-        </div>
 
+</div>
 </body>
-
-
-<script src="js/SetupMap.js"></script>
-<script src="js/paraCords.js"></script>
-<script src="js/readFile.js"></script>
-<script>window.onload = createChart()</script>
+    <!-- Load these scripts at the end so that everything has been created and can be changed -->
+    <script src="js/SetupMap.js"></script>
+    <script src="js/paraCords.js"></script>
+    <script src="js/readFile.js"></script>
+    <!-- Calls the createChart function to create an empty line chart on startup -->
+    <script>window.onload = createChart()</script>
