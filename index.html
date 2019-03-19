@@ -1,0 +1,181 @@
+﻿<!DOCTYPE html>
+<meta charset="utf-8">
+
+<!-- <svg width="960" height="500"></svg> -->
+<!-- <script src="https://d3js.org/d3.v5.min.js"></script>
+ -->
+<body>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <link href="style.css" media="screen" rel="stylesheet" type="text/css" />
+    <script src="js/changeImage.js"></script>
+    <script src="js/createChart.js"></script>
+
+    <script src="js/updateMap.js"></script>
+    <script src="js/updateparaCords.js"></script>
+    <script src="js/changeLayout.js"></script>
+
+    <script>var layout = 0;</script>
+    <script>var chosenData = 2;</script>
+    <script>var chosenType = 1;</script>
+    <script>var data_vals = []</script>
+    <script>var befolkningMedel = [] </script>
+    <script>var vanor = []</script>
+    <script>var valtLan = "Totalt riket";</script>
+    
+    <div class="allt">
+        <div class="header">
+            <h1>SpritVis</h1>
+        </div>
+
+        <div class="info-body">
+            <div class="allt-para">
+                <div class="tables">
+                    <button class="buttonClass" id="totaltButton" onclick="changeLayoutTotalt()">Totalt</button>
+                    <button class="buttonClass" id="personButton" onclick="changeLayoutPerson()">Per person</button>
+                    <div class="drop-downs">
+                        <div class="dropdown">
+                            <select class="dropbtn" name="yearOption" id="yearDropDown" onchange="changeImage(); changePara();changeMap();updateBefolkning();">
+                                <option selected="selected">År</option>
+                                <option value="2017">2017</option>
+                                <option value="2016">2016</option>
+                                <option value="2015">2015</option>
+                                <option value="2014">2014</option>
+                                <option value="2013">2013</option>
+                                <option value="2012">2012</option>
+                                <option value="2011">2011</option>
+                                <option value="2010">2010</option>
+                                <option value="2009">2009</option>
+                                <option value="2008">2008</option>
+                                <option value="2007">2007</option>
+                                <option value="2006">2006</option>
+                            </select>
+                        </div>
+                        <div class="dropdown">
+                            <select class="dropbtn" name="typeOption" onChange="changeImage(); createChart() ;changeMap()" id="typeDropDown">
+                                <!--RGB till färgkodningen:
+                                (255,255,204)
+                                (194,230,153)
+                                (120,198,121)
+                                (49,163,84)
+                                (0,104,55)
+                                -->
+                                <option selected="selected">Alkoholtyp</option>
+                                <option>Sprit</option>
+                                <option>Vin</option>
+                                <option>Öl</option>
+                                <option>Cider och blanddrycker</option>
+                                <option>Alkoholfri</option>
+                                <option>Totalt</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="quarter-info">
+                        <table class="tabell" id="tabell">
+                            <tr>
+                                <th id="lanBox" colspan="2">Totalt riket</th>
+                            </tr>
+                            <tr>
+                                <td>Kvartal</td>
+                                <td>Konsumtion(liter)</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td></td>
+                            </tr>
+
+                        </table>
+                    </div>
+
+                    <div class="color-coding">
+                        <h2 id="colorCodingHeader">Årskonsumtion</h2>
+                        <div class="codingDiv" id="codingDiv1">
+                            <div class="circleDiv" id="circleDiv1"></div>
+                            <div class="codingTextDiv">
+                                <p class="codingText" id="codingText1"></p>
+                            </div>
+                        </div>
+                        <div class="codingDiv" id="codingDiv2">
+                            <div class="circleDiv" id="circleDiv2"></div>
+                            <div class="codingTextDiv">
+                                <p class="codingText" id="codingText2"></p>
+                            </div>
+                        </div>
+                        <div class="codingDiv" id="codingDiv3">
+                            <div class="circleDiv" id="circleDiv3"></div>
+                            <div class="codingTextDiv">
+                                <p class="codingText" id="codingText3"></p>
+                            </div>        
+                        </div>
+                        <div class="codingDiv" id="codingDiv4">
+                            <div class="circleDiv" id="circleDiv4"></div>
+                            <div class="codingTextDiv">
+                                <p class="codingText" id="codingText4"></p>
+                            </div>
+                        </div>
+                        <div class="codingDiv" id="codingDiv5">
+                            <div class="circleDiv" id="circleDiv5"></div>
+                            <div class="codingTextDiv">
+                                <p class="codingText" id="codingText5"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="map-body" id="mapid">
+                </div>
+                <div id="chartContainer" style="height: 20vw; width: 30vw;"></div>
+                <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+                <div id="alkoholVanor">
+                    <h2 id="alcoholHeader">Alkoholvanor</h2>
+                    <div id="gradering">
+                        <div id="risk"><p class="vanorText" id="riskText"></p></div>
+                        <div id="ejRisk"><p class="vanorText" id="ejRiskText"></p></div>
+                        <div id="ejDruckit"><p class="vanorText" id="ejDruckitText"></p></div>
+                    </div>
+
+                    <div id="alkoholKodning">
+                        <div id="riskSmall" class="smallBox"></div>
+                        <p class="legendText">Riskkonsumenter</p>
+                        <div id="ejRiskSmall" class="smallBox"></div>
+                        <p class="legendText">Ej riskkonsumenter</p>
+                        <div id="ejDruckitSmall" class="smallBox"></div>
+                        <p class="legendText">Ej druckit alkohol</p>
+                    </div>
+                </div>
+            </div>
+   <div id="paradiv" class="para"></div>
+        <div id="paralegends">
+            <div id = "wraper">
+                        <div id="Kvartal1" class="smallBox"></div>
+                        <p class="legendText">Kvartal 1</p>
+                        <div id="Kvartal2" class="smallBox"></div>
+                        <p class="legendText">Kvartal 2</p>
+                        <div id="Kvartal3" class="smallBox"></div>
+                        <p class="legendText">Kvartal 3</p>
+                        <div id="Kvartal4" class="smallBox"></div>
+                        <p class="legendText">Kvartal 4</p>
+            </div>
+    </div>
+
+    </div>
+        </div>
+
+</body>
+
+
+<script src="js/SetupMap.js"></script>
+<script src="js/paraCords.js"></script>
+<script src="js/readFile.js"></script>
+<script>window.onload = createChart()</script>

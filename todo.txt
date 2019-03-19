@@ -1,0 +1,8 @@
+Länka vyer
+Få klart spritdatan
+Röra axlar i paralella coords
+Plotten/diagramet så det får data från jsonfilen
+använda de 2 nya datasetten.
+
+Julle, Dela med befolkning
+Fixa andra datasetet
