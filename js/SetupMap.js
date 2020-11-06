@@ -26,7 +26,7 @@ function SetupMap(yearData, befolkningData) {
     //Code build on this example
     //https://bl.ocks.org/john-guerra/43c7656821069d00dcbc
     // He we get the data. 
-    d3.json("Data/Sweden-counties.geo.json", function(error, geoData) {
+    d3.json("Data/sweden-counties.geo.json", function(error, geoData) {
         // Get features aka names and geometry if wanted
         var counties_features = geoData.features;
         // Draw each counties as a path
